@@ -70,9 +70,9 @@
         const keyword = "Mr. Hoover";
         const kwrx = RegExp("^" + keyword.replace(".", "\\.") + "[ ,]+");
 
-        const greeting = "Welcome to The JFK Files, I'm J. Edgar Hoover.";
-        const useragent = "HooverBot";
+        // we can't play speech until we've received the whole audio file, so use the smallest file size possible
         const audioformat = "audio-16khz-32kbitrate-mono-mp3";
+        const greeting = "Welcome to The JFK Files, I'm J. Edgar Hoover.";
 
         const connection = window.WebChat.createDirectLine({
             token: botSecret,
@@ -222,8 +222,6 @@
                 req.open("POST", speechSynthesisEndpoint, true);
                 req.setRequestHeader("Authorization", token);
                 req.setRequestHeader("Content-type", "text/plain");
-                req.setRequestHeader("User-Agent", useragent);
-                // we can't play until we've received tho whole file, so use the smallest file size possible
                 req.setRequestHeader("X-Microsoft-OutputFormat", audioformat);
                 req.onload = (function () {
                     if (req.status === 200) {
